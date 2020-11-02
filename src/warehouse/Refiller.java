@@ -1,22 +1,22 @@
 package warehouse;
 
-public class Consultor implements Runnable {
+import java.util.Random;
+
+public class Refiller implements Runnable {
 
     Warehouse stock;
-    private final int i;
-    private int myCount;
+    Random rnd = new Random();
 
-    public Consultor(Warehouse stock, int i) {
-        this.stock=stock;
-        this.i=i;
+    public Refiller(Warehouse warehouse) {
+        this.stock=warehouse;
     }
 
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()){
             try {
-                Thread.sleep(500);
-                stock.countMyStock(i);
+                Thread.sleep(2000);
+                stock.addStock(rnd.nextInt(3)+1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

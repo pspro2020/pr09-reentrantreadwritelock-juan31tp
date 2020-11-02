@@ -1,22 +1,21 @@
 package warehouse;
 
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList<Product> stock = new ArrayList<>();
+        Warehouse warehouse = new Warehouse();
 
         Thread[] consultors = new Thread[3];
         for (int i=0; i<consultors.length;i++){
-            consultors[i]=new Thread(new Consultor(stock, i+1));
+            consultors[i]=new Thread(new Consultor(warehouse, i+1));
         }
 
-        Thread provider = new Thread(new Warehouse());
+        Thread refiller = new Thread(new Refiller(warehouse));
 
-        provider.start();
+        refiller.start();
 
         //Wait to let it have some stock before consultors count
         try {
